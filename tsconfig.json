@@ -1,21 +1,10 @@
 {
     "compilerOptions": {
-        /* Performance & Stability */
-        "target": "ES2022", // Supports modern JS features used in scraping
-        "module": "NodeNext", // The best module system for modern Node.js
-        "moduleResolution": "NodeNext", // Ensures imports match how Node.js actually works
-        "skipLibCheck": true, // Improves performance by skipping type checks for node_modules
-
-        /* Project Structure */
-        "outDir": "./dist", // Compiled JS files go here
-        "rootDir": "./src", // Your TS source files live here
-
-        /* Interop & Safety */
-        "strict": true, // Enables all strict type-checking options
-        "esModuleInterop": true, // Ensures compatibility between CommonJS and ES Modules
-        "resolveJsonModule": true, // Allows you to import .json files (useful for config/data)
-        "forceConsistentCasingInFileNames": true // Prevents issues when moving between Windows/Linux
+        "target": "esnext",
+        "module": "esnext",
+        "strict": true,
+        "moduleResolution": "Node"
     },
-    "include": ["src/**/*"], // Only compile files in the src folder
-    "exclude": ["node_modules", "dist"] // Ignore these directories during compilation
+    "include": ["./src/**/*.ts"],
+    "exclude": ["node_modules"]
 }
