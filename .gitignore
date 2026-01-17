@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+pnpm-debug.log*
+
+# Build output
+dist/
+out/
+*.tsbuildinfo
+
+# Environment variables & secrets
+.env
+.env.local
+
+# OS generated files
+.DS_Store
+Thumbs.db
