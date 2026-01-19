@@ -5,9 +5,9 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "dev": "tsx src/index.ts",
         "build": "tsc",
-        "start": "tsx ./src/index.ts"
+        "start": "tsx ./src/index.ts",
+        "test": "vitest"
     },
     "keywords": [],
     "author": "",
@@ -16,6 +16,7 @@
     "devDependencies": {
         "@types/node": "^25.0.9",
         "tsx": "^4.21.0",
-        "typescript": "^5.9.3"
+        "typescript": "^5.9.3",
+        "vitest": "^4.0.17"
     }
 }
