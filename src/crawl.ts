@@ -1,5 +1,13 @@
 import { JSDOM } from "jsdom";
 
+type ExtractedPageData = {
+    url: string;
+    h1: string;
+    first_paragraph: string;
+    outgoing_links: string[];
+    image_urls: string[];
+};
+
 function normalizeURL(url: string): string {
     try {
         const normalized = new URL(url);
@@ -24,4 +32,40 @@ function getFirstParagraphFromHTML(html: string): string {
     return paragraph?.textContent?.trim() ?? "";
 }
 
-export { normalizeURL, getH1FromHTML, getFirstParagraphFromHTML };
+function getURLsFromHTML(html: string, baseURL: string): string[] {
+    const dom = new JSDOM(html);
+    const links = Array.from(dom.window.document.querySelectorAll("a"));
+    return links
+        .map((link) => link.getAttribute("href"))
+        .filter((href): href is string => Boolean(href))
+        .map((href) => new URL(href, baseURL).toString());
+}
+
+function getImagesFromHTML(html: string, baseURL: string): string[] {
+    const dom = new JSDOM(html);
+    const images = Array.from(dom.window.document.querySelectorAll("img"));
+    return images
+        .map((image) => image.getAttribute("src"))
+        .filter((src): src is string => Boolean(src))
+        .map((src) => new URL(src, baseURL).toString());
+}
+
+function extractPageData(html: string, pageURL: string): ExtractedPageData {
+    return {
+        url: pageURL,
+        h1: getH1FromHTML(html),
+        first_paragraph: getFirstParagraphFromHTML(html),
+        outgoing_links: getURLsFromHTML(html, pageURL),
+        image_urls: getImagesFromHTML(html, pageURL),
+    };
+}
+
+export {
+    normalizeURL,
+    getH1FromHTML,
+    getFirstParagraphFromHTML,
+    getURLsFromHTML,
+    getImagesFromHTML,
+    extractPageData,
+    type ExtractedPageData,
+};
