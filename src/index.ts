@@ -1,4 +1,6 @@
-function main() {
+import { getHTML } from "./crawl";
+
+async function main() {
     const args = process.argv.slice(2);
 
     if (args.length < 1) {
@@ -15,7 +17,8 @@ function main() {
 
     const baseURL = args[0];
     console.log(`Starting crawl at ${baseURL}`);
-    process.exit(0);
+    await getHTML(baseURL);
+    process.exitCode = 0;
 }
 
 main();

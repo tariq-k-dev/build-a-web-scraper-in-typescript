@@ -60,6 +60,37 @@ function extractPageData(html: string, pageURL: string): ExtractedPageData {
     };
 }
 
+async function getHTML(url: string): Promise<void> {
+    try {
+        const response = await fetch(url, {
+            headers: {
+                "User-Agent": "BootCrawler/1.0",
+            },
+        });
+
+        if (response.status >= 400) {
+            console.error(
+                `Error: received status code ${response.status} for ${url}`,
+            );
+            return;
+        }
+
+        const contentType = response.headers.get("content-type") ?? "";
+        if (!contentType.toLowerCase().includes("text/html")) {
+            console.error(
+                `Error: expected text/html content type for ${url}, got ${contentType}`,
+            );
+            return;
+        }
+
+        const body = await response.text();
+        console.log(body);
+    } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        console.error(`Error: failed to fetch ${url}: ${message}`);
+    }
+}
+
 export {
     normalizeURL,
     getH1FromHTML,
@@ -67,5 +98,6 @@ export {
     getURLsFromHTML,
     getImagesFromHTML,
     extractPageData,
+    getHTML,
     type ExtractedPageData,
 };
